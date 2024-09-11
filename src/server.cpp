@@ -1,4 +1,4 @@
-#include "network_utils.hpp"
+#include "./common/network_utils.hpp"
 #include <iostream>
 #include <unistd.h>
 #include <string.h>
@@ -23,7 +23,11 @@ int main()
 
     if (strcmp(buffer, "ping") != 0){
         std::cerr << "Message invalide, le server attend 'ping' " << std::endl;
+        const char *error = " invalid input";
+        
+        send_message(new_socket, error);
 
+        std::cout << "Réponse envoyée : " << error << std::endl;
         close(new_socket);
         close(server_fd);
 
@@ -33,6 +37,7 @@ int main()
         const char *pong = "pong";
         send_message(new_socket, pong);
         std::cout << "Réponse envoyée : pong" << std::endl;
+
     }
 
     close(new_socket);
